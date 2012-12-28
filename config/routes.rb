@@ -1,9 +1,10 @@
 ExamPortal::Application.routes.draw do
   scope 'admin' do
+    resources :technologies do
+      resources :topics
+    end
     resources :topics
-    resources :technologies
   end
-
 
   authenticated :user do
     root :to => 'home#index'

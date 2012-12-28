@@ -1,4 +1,12 @@
-<h3>Home</h3>
-<% @users.each do |user| %>
-  <p>User: <%=link_to user.name, user %></p>
-<% end %>
+<ul>
+  <% @technologies.each do |technology| %>
+    <li>
+      <%= link_to technology.name, "javascript:void(0);", onclick: "show_topics(this);" %>
+      <ul id="link" style="display: none;">
+        <% technology.topics.each do |topic| %>
+          <li><%= link_to topic.name, "javascript:void(0);", onclick: "alert('#TODO development')" %></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>

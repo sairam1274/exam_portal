@@ -16,6 +16,7 @@
     <td><%= link_to 'Show', technology %></td>
     <td><%= link_to 'Edit', edit_technology_path(technology) %></td>
     <td><%= link_to 'Destroy', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'New topic',new_technology_topic_path(technology) %></td>
   </tr>
 <% end %>
 </table>

@@ -2,7 +2,11 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    @topics = Topic.all
+    if Technology.exists?(params[:technology_id])
+      @topics = Technology.find(params[:technology_id]).topics
+    else
+      @topics = Topic.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +29,7 @@ class TopicsController < ApplicationController
   # GET /topics/new.json
   def new
     @topic = Topic.new
-
+    @topic.technology_id = params[:technology_id] if Technology.exists?(params[:technology_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @topic }
