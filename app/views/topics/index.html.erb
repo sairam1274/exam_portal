@@ -12,7 +12,7 @@
 
 <% @topics.each do |topic| %>
   <tr>
-    <td><%= topic.technology_id %></td>
+    <td><%= topic.technology.name %></td>
     <td><%= topic.name %></td>
     <td><%= topic.description %></td>
     <td><%= link_to 'Show', topic %></td>
