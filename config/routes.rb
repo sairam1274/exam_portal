@@ -1,9 +1,11 @@
 ExamPortal::Application.routes.draw do
+
   scope 'admin' do
     resources :technologies do
       resources :topics
     end
     resources :topics
+    resources :questions
   end
 
   authenticated :user do
