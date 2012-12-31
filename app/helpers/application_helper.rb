@@ -12,4 +12,12 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def technologies_list
+    Technology.all.collect {|technology| [ technology.name, technology.id ]}
+  end
+
+  def topic_list
+    Topic.all.collect {|topic| [ topic.name, topic.id ]}
+  end
+
 end

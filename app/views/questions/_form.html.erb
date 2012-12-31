@@ -2,14 +2,16 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :technology_id %>
-    <%= f.input :topic_id %>
-    <%= f.input :title %>
-    <%= f.input :question_type %>
-    <%= f.input :parent_id %>
-    <%= f.input :note %>
-    <%= f.input :description %>
+    <%= f.select :technology_id, technologies_list, :prompt => 'Select Technology' %>
+    <%= f.select :topic_id, topic_list, :prompt => 'Select Topic' %>
+    <%= f.input :title, :input_html => { :class => 'questions_title' } %>
+    <%= f.select :question_type, Question::QUESTION_TYPE %>
+    <%#= f.input :parent_id %>
+    <%#= f.input :note, :input_html => { :class => 'questions_title' } %>
+    <%#= f.input :description, :input_html => { :class => 'questions_title' } %>
   </div>
+
+  <%= render :partial => "options"  %>
 
   <div class="form-actions">
     <%= f.button :submit %>
