@@ -5,4 +5,6 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :options, :allow_destroy => true
 
   QUESTION_TYPE = [["Single answer", "single"], ["Multiple answers", "multiple"], ["Free text", "free_text"]]
+
+  validates :title, :technology_id, :topic_id, :question_type, :presence => true
 end

@@ -1,19 +1,15 @@
-<%= simple_form_for(@question) do |f| %>
+<%= simple_nested_form_for(@question) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.select :technology_id, technologies_list, :prompt => 'Select Technology' %>
-    <%= f.select :topic_id, topic_list, :prompt => 'Select Topic' %>
-    <%= f.input :title, :input_html => { :class => 'questions_title' } %>
-    <%= f.select :question_type, Question::QUESTION_TYPE %>
-    <%#= f.input :parent_id %>
-    <%#= f.input :note, :input_html => { :class => 'questions_title' } %>
-    <%#= f.input :description, :input_html => { :class => 'questions_title' } %>
-  </div>
-
-  <%= render :partial => "options", :locals => {:question => @question}  %>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+    <div class="form-inputs">
+      <%= f.input :technology_id, :collection => technologies_list, :prompt => 'Select Technology' %>
+      <%= f.input :topic_id, :collection => topic_list, :prompt => 'Select Topic' %>
+      <%= f.input :title, input_html: { class: 'questions_title' } %>
+      <%= f.select :question_type, Question::QUESTION_TYPE %>
+      <%= f.fields_for :options %>
+      <p><%= f.link_to_add "Add a option", :options unless params[:question_type] == "free_text"%></p>
+      <div class="form-actions">
+        <%= f.button :submit %>
+      </div>
+    </div>
+  <% end %>
