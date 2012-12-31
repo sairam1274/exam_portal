@@ -25,6 +25,7 @@ class QuestionsController < ApplicationController
   # GET /questions/new.json
   def new
     @question = Question.new
+    4.times { @question.options.build }
 
     respond_to do |format|
       format.html # new.html.erb

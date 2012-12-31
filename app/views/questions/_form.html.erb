@@ -11,7 +11,7 @@
     <%#= f.input :description, :input_html => { :class => 'questions_title' } %>
   </div>
 
-  <%= render :partial => "options"  %>
+  <%= render :partial => "options", :locals => {:question => @question}  %>
 
   <div class="form-actions">
     <%= f.button :submit %>

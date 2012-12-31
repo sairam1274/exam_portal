@@ -1,0 +1,13 @@
+<% if params[:question_type] == "free_text" %>
+
+<% elsif params[:question_type] == "multiple" %>
+  <%= f.text_field :answer %>
+  <%= f.radio_button :correct_answer, "1" %>
+  <%= f.link_to_remove "Remove this option" %>
+<% else %>
+  <%= f.text_field :answer %>
+  <%= f.check_box:correct_answer if params[:question_type] == "single"%>
+  <%= f.link_to_remove "Remove this option" %>
+<% end %>
+
+

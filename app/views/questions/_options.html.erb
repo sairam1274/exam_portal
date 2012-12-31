@@ -1,6 +1,5 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
-
-<%= "_options.html" %>
+<%= nested_form_for question do |f| %>
+  <%= f.fields_for :options %>
+  <p><%= f.link_to_add "Add a option", :options unless params[:question_type] == "free_text"%></p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
