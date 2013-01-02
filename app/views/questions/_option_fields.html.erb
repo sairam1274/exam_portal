@@ -1,13 +1,9 @@
-<% if params[:question_type] == "free_text" %>
-
-<% elsif params[:question_type] == "multiple" %>
-  <%= f.text_field :answer, class: 'options_title' %>
-  is correct? <%= f.check_box :correct_answer %>
-  <%= f.link_to_remove "Remove this option" %>
+<%= f.text_field :answer, class: 'options_title' %>
+<% if @question.question_type == "multiple" %>
+  is correct? <%= f.check_box :correct_answer, class: 'is_correct_option' %>
 <% else %>
-  <%= f.text_field :answer, class: 'options_title' %>
-  <%= f.radio_button :correct_answer, "1" %>
-  <%= f.link_to_remove "Remove this option" %>
+is correct? <%= f.radio_button :correct_answer, "1", class: 'is_correct_option' %>
 <% end %>
+<%= f.link_to_remove "Remove this option" %>
 
 

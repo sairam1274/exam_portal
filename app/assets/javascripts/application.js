@@ -16,6 +16,3 @@
 //= require_tree .
 //= require jquery_nested_form
 
-function show_topics(technology) {
-    $(technology).next('ul').slideToggle("slow");
-}

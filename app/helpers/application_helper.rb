@@ -16,8 +16,13 @@ module ApplicationHelper
     Technology.all.collect {|technology| [ technology.name, technology.id ]}
   end
 
-  def topic_list
-    Topic.all.collect {|topic| [ topic.name, topic.id ]}
+  def topic_list(technology_id)
+    topics = []
+    if technology_id
+      technology = Technology.find(technology_id)
+      topics = technology.topics.all.collect {|topic| [ topic.name, topic.id ]}
+    end
+    return topics
   end
 
 end

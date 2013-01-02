@@ -2,14 +2,18 @@
   <%= f.error_notification %>
 
     <div class="form-inputs">
-      <%= f.input :technology_id, :collection => technologies_list, :prompt => 'Select Technology' %>
-      <%= f.input :topic_id, :collection => topic_list, :prompt => 'Select Topic' %>
+      <%= f.input :technology_id, collection:  technologies_list, prompt:  'Select Technology' %>
+      <%= f.input :topic_id, collection: topic_list(@question.technology_id), prompt: 'Select Topic' %>
       <%= f.input :title, input_html: { class: 'questions_title' } %>
       <%= f.select :question_type, Question::QUESTION_TYPE %>
-      <%= f.fields_for :options %>
-      <p><%= f.link_to_add "Add a option", :options unless params[:question_type] == "free_text"%></p>
+
+      <% hide_if_free_text = (@question.question_type == "free_text") ? "display: none" : "display: block" %>
+      <div id="list_option_type" style="<%= hide_if_free_text %>">
+        <%= render :partial => "options", :locals => { :f => f, :question => @question } %>
+      </div>
       <div class="form-actions">
         <%= f.button :submit %>
+        <%= f.button :submit, "Create & New Question" %>
       </div>
     </div>
   <% end %>

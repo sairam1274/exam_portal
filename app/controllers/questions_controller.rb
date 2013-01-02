@@ -83,4 +83,10 @@ class QuestionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def list_option_type
+    technology = Technology.find(params[:technology_id])
+    topic_list = technology.topics.all.collect {|topic| [ topic.name, topic.id ]}
+    render :json => topic_list
+  end
 end
