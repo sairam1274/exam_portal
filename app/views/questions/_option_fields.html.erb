@@ -2,7 +2,7 @@
 <% if @question.question_type == "multiple" %>
   is correct? <%= f.check_box :correct_answer, class: 'is_correct_option' %>
 <% else %>
-is correct? <%= f.radio_button :correct_answer, "1", class: 'is_correct_option' %>
+is correct? <%= f.radio_button :correct_answer, true, class: 'is_correct_option' %>
 <% end %>
 <%= f.link_to_remove "Remove this option" %>
 

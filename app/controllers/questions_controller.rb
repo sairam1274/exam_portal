@@ -61,6 +61,12 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
 
+    params[:question]["options_attributes"].each do |key, value|
+      unless value.has_key?("correct_answer")
+        params[:question]["options_attributes"][key.to_s].merge!("correct_answer" => "0")
+      end
+    end
+    
     respond_to do |format|
       if @question.update_attributes(params[:question])
         format.html { redirect_to @question, notice: 'Question was successfully updated.' }
@@ -85,8 +91,11 @@ class QuestionsController < ApplicationController
   end
 
   def list_option_type
-    technology = Technology.find(params[:technology_id])
-    topic_list = technology.topics.all.collect {|topic| [ topic.name, topic.id ]}
+    topic_list = []
+    unless params[:technology_id].blank?
+      technology = Technology.find(params[:technology_id]) rescue nil
+      topic_list = technology.topics.all.collect {|topic| [ topic.name, topic.id ]} if technology
+    end
     render :json => topic_list
   end
 end

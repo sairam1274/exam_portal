@@ -14,6 +14,7 @@ $("#question_question_type").live("change", function(){
     {
       $("#list_option_type").show();
       change_option_type("radio");
+      $(".is_correct_option").attr("checked", false);
     }
     else if($(this).val()=="free_text")
     {
@@ -42,9 +43,17 @@ $("#list_option_type").live("mouseover", function(){
 
 function change_option_type(input_type) {
     $(".is_correct_option").each(function(index) {
+        if (input_type == "checkbox") {
+            $(this).removeClass("radio").addClass("checkbox");
+         }
+        if (input_type == "radio") {
+            $(this).removeClass("checkbox").addClass("radio");
+         }
         $(this).get(0).type = input_type;
     });
 }
+
+
 
 
 $("#question_technology_id").live("change", function(){
@@ -60,4 +69,9 @@ $("#question_technology_id").live("change", function(){
                  });
             }
         });
+});
+
+$(".radio").live("change", function(){
+    $(".is_correct_option").attr("checked", false);
+    $(this).attr("checked", true);
 })
