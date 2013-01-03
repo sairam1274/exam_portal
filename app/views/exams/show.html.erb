@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @exam.user_id %>
+</p>
+
+<p>
+  <b>Technology:</b>
+  <%= @exam.technology_id %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= @exam.topic_id %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%= @exam.start_time %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%= @exam.end_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_exam_path(@exam) %> |
+<%= link_to 'Back', exams_path %>

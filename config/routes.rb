@@ -1,5 +1,8 @@
 ExamPortal::Application.routes.draw do
 
+  resources :exams
+
+
   scope 'admin' do
     resources :technologies do
       resources :topics
@@ -18,4 +21,6 @@ ExamPortal::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
   resources :users
+  match '/exam/:id'  => 'home#exam', :as => :exam
+  match '/save_exam/:id' => 'home#save_exam', :as => :save_exam
 end

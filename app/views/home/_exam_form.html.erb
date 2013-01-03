@@ -1,0 +1,44 @@
+<div style="margin-left:30px;margin-right: 30px;">
+  <% unless @topic.blank? %>
+    <% unless @topic.questions.blank? %>
+      <h1><%= @topic.name %></h1>
+      
+
+      <%= form_tag save_exam_path(@topic.id), :id => "exam_form", :remote => true do %>
+
+      
+        <%@topic.questions.each_with_index do |question,i|%>
+          <p id="question_title_field" class="">
+            <label for="question_title"><strong>Question <%= i+1 %>.</strong>&nbsp;&nbsp;<%= question.title %></label>
+            <input type="hidden" value="<%= question.id   %>" size="" name="question[id][]" id="question_id" class="fullwidth title" readonly />
+            <input type="hidden" value="<%= question.title   %>" size="" name="question[title][]" id="question_title" class="fullwidth title" readonly />
+            <input type="hidden" value="<%= question.question_type   %>" size="" name="question[question_type][]" id="question_type" class="fullwidth title" readonly />
+            <% if question.question_type == "single" %>
+              <% unless question.options.blank? %>
+                <% question.options.each do |question_option| %>
+                <div style="margin-left:60px;"> <input type="radio" name="options[<%= question.id %>][]" value="<%= question_option.id %>"/>&nbsp;&nbsp;<%= question_option.answer %></div>
+              <% end %>
+            <%end%>
+          <% elsif  question.question_type == "multiple"%>
+            <% unless question.options.blank? %>
+              <% question.options.each do |question_option| %>
+                <div style="margin-left:60px;"> <input type="checkbox" name="options[<%= question.id %>][]" value="<%= question_option.id %>"/>&nbsp;&nbsp;<%= question_option.answer %></div>
+              <% end %>
+            <%end%>
+          <% elsif  question.question_type == "free_text" %>
+            <textarea rows="20" name="options[<%= question.id %>][]"  cols="40" class="text required questions_title"></textarea>
+          <% end %>
+          </p>
+        <% end %>
+        <div class="form-actions">
+          <input type="submit" value="Finish" name="commit" class="btn">&nbsp; <%= link_to 'Back', root_path %>
+        </div>
+      <% end  %>
+    <% else  %>
+      <div class="alert alert-success">
+        <a data-dismiss="alert" class="close">×</a>
+        <div id="flash_notice">We don't have questions on any <strong><%= @topic.name.capitalize %></strong> right now. Please try another topic.</div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

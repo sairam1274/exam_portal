@@ -1,12 +1,18 @@
 <ul>
   <% @technologies.each do |technology| %>
     <li>
-      <%= link_to technology.name, "javascript:void(0);", onclick: "show_topics(this);" %>
+      <%= link_to technology.name.capitalize, "javascript:void(0);", onclick: "show_topics(this);" %>
       <ul id="link" style="display: none;">
         <% technology.topics.each do |topic| %>
-          <li><%= link_to topic.name, "javascript:void(0);", onclick: "alert('#TODO development')" %></li>
+          <li><%= link_to topic.name.capitalize, exam_path(:id=>topic.id), :id=>"topic_#{topic.id}", :class=>"fancybox" %></li>
         <% end %>
       </ul>
     </li>
   <% end %>
 </ul>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".fancybox").fancybox();
+  });
+
+</script>
