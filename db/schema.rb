@@ -11,7 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227121845) do
+ActiveRecord::Schema.define(:version => 20130103093221) do
+
+  create_table "exams", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "technology_id"
+    t.integer  "topic_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "options", :force => true do |t|
+    t.integer  "question_id"
+    t.text     "answer"
+    t.string   "answer_type"
+    t.boolean  "correct_answer"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "technology_id"
+    t.integer  "topic_id"
+    t.text     "title"
+    t.string   "question_type"
+    t.integer  "parent_id"
+    t.text     "note"
+    t.string   "description"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -23,6 +54,21 @@ ActiveRecord::Schema.define(:version => 20121227121845) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "technologies", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "topics", :force => true do |t|
+    t.integer  "technology_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

@@ -4,7 +4,11 @@ class Question < ActiveRecord::Base
   belongs_to :technology
   belongs_to :topic
   has_many :options
+
   accepts_nested_attributes_for :options, :allow_destroy => true, :reject_if => :all_blank
+
+  belongs_to :topic
+  
 
   QUESTION_TYPE = [["Single answer", "single"], ["Multiple answers", "multiple"], ["Free text", "free_text"]]
 
