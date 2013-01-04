@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @answer.user_id %>
+</p>
+
+<p>
+  <b>Technology:</b>
+  <%= @answer.technology_id %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= @answer.topic_id %>
+</p>
+
+<p>
+  <b>Is correct:</b>
+  <%= @answer.is_correct %>
+</p>
+
+<p>
+  <b>Question type:</b>
+  <%= @answer.question_type %>
+</p>
+
+<p>
+  <b>Question:</b>
+  <%= @answer.question_id %>
+</p>
+
+<p>
+  <b>Question title:</b>
+  <%= @answer.question_title %>
+</p>
+
+<p>
+  <b>:</b>
+  <%= @answer. %>
+</p>
+
+<p>
+  <b>Actual answer ids:</b>
+  <%= @answer.actual_answer_ids %>
+</p>
+
+<p>
+  <b>:</b>
+  <%= @answer. %>
+</p>
+
+<p>
+  <b>Given answer ids:</b>
+  <%= @answer.given_answer_ids %>
+</p>
+
+<p>
+  <b>Actual answers:</b>
+  <%= @answer.actual_answers %>
+</p>
+
+<p>
+  <b>Given answers:</b>
+  <%= @answer.given_answers %>
+</p>
+
+<p>
+  <b>Free text answer:</b>
+  <%= @answer.free_text_answer %>
+</p>
+
+
+<%= link_to 'Edit', edit_answer_path(@answer) %> |
+<%= link_to 'Back', answers_path %>

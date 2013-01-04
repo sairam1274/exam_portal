@@ -5,33 +5,38 @@
       
 
       <%= form_tag save_exam_path(@topic.id), :id => "exam_form", :remote => true do %>
-
+       <input type="hidden" value="<%= @exam.id   %>" size="" name="answer[exam_id]" id="exam_id" class="fullwidth title" readonly />
       
         <%@topic.questions.each_with_index do |question,i|%>
           <p id="question_title_field" class="">
             <label for="question_title"><strong>Question <%= i+1 %>.</strong>&nbsp;&nbsp;<%= question.title %></label>
-            <input type="hidden" value="<%= question.id   %>" size="" name="question[id][]" id="question_id" class="fullwidth title" readonly />
-            <input type="hidden" value="<%= question.title   %>" size="" name="question[title][]" id="question_title" class="fullwidth title" readonly />
-            <input type="hidden" value="<%= question.question_type   %>" size="" name="question[question_type][]" id="question_type" class="fullwidth title" readonly />
+
+            <input type="hidden" value="<%= question.id   %>"  name="answer[question_id][]" id="question_id" class="fullwidth title" readonly />
+            <input type="hidden" value="<%= question.title   %>" name="answer[question_title][]" id="question_title" class="fullwidth title" readonly />
+            <!--input type="hidden" value="<%#= question.question_type   %>" size="" name="answer[question_type][]" id="question_type" class="fullwidth title" readonly /-->
             <% if question.question_type == "single" %>
               <% unless question.options.blank? %>
                 <% question.options.each do |question_option| %>
-                <div style="margin-left:60px;"> <input type="radio" name="options[<%= question.id %>][]" value="<%= question_option.id %>"/>&nbsp;&nbsp;<%= question_option.answer %></div>
+                <div style="margin-left:60px;"> <input type="radio" name="answer[<%= question.id %>][]" value="<%= question_option.id %>"/>&nbsp;&nbsp;<%= question_option.answer %>
+                <input type="hidden" name="answer[<%= question.id %>_<%= question.topic_id%>][]" value="<%= question_option.answer %>" />
+                </div>
               <% end %>
             <%end%>
           <% elsif  question.question_type == "multiple"%>
             <% unless question.options.blank? %>
               <% question.options.each do |question_option| %>
-                <div style="margin-left:60px;"> <input type="checkbox" name="options[<%= question.id %>][]" value="<%= question_option.id %>"/>&nbsp;&nbsp;<%= question_option.answer %></div>
+                <div style="margin-left:60px;"> <input type="checkbox" name="answer[<%= question.id %>][]" value="<%= question_option.id %>"/>&nbsp;&nbsp;<%= question_option.answer %>
+                   <input type="hidden" name="answer[<%= question.id %>_<%= question.topic_id%>][]" value="<%= question_option.answer %>" />
+               </div>
               <% end %>
             <%end%>
           <% elsif  question.question_type == "free_text" %>
-            <textarea rows="20" name="options[<%= question.id %>][]"  cols="40" class="text required questions_title"></textarea>
+            <textarea rows="20" name="answer[<%= question.id %>][]"  cols="40" class="text required questions_title"></textarea>
           <% end %>
           </p>
         <% end %>
         <div class="form-actions">
-          <input type="submit" value="Finish" name="commit" class="btn">&nbsp; <%= link_to 'Back', root_path %>
+          <input type="submit" value="Finish" name="commit" class="btn"/>&nbsp; <%= link_to 'Back', root_path %>
         </div>
       <% end  %>
     <% else  %>

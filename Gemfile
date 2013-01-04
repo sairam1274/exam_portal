@@ -32,4 +32,4 @@ gem "hub", ">= 1.10.2", :require => nil, :group => [:development]
 gem 'jquery-rails'
 gem 'fancybox-rails'
 gem "nested_form"
-
+gem "rb-readline", "~> 0.4.2"

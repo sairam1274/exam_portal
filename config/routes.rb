@@ -1,5 +1,8 @@
 ExamPortal::Application.routes.draw do
 
+  resources :answers
+
+
   resources :exams
 
 
@@ -23,4 +26,5 @@ ExamPortal::Application.routes.draw do
   resources :users
   match '/exam/:id'  => 'home#exam', :as => :exam
   match '/save_exam/:id' => 'home#save_exam', :as => :save_exam
+  match '/reports/:id/exam' => 'reports#show', :as => :show_reports
 end
