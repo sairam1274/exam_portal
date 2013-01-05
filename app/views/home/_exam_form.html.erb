@@ -4,7 +4,7 @@
       <h1><%= @topic.name %></h1>
       
 
-      <%= form_tag save_exam_path(@topic.id), :id => "exam_form", :remote => true do %>
+      <%= form_tag save_exam_path(@topic.id), :update => "update_exam_id", :id => "exam_form", :remote => true do %>
        <input type="hidden" value="<%= @exam.id   %>" size="" name="answer[exam_id]" id="exam_id" class="fullwidth title" readonly />
       
         <%@topic.questions.each_with_index do |question,i|%>

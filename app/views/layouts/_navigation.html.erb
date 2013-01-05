@@ -2,34 +2,41 @@
 <ul class="nav">
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+      <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
     </li>
   <% else %>
     <li>
-    <%= link_to 'Login', new_user_session_path %>
+      <%= link_to 'Login', new_user_session_path %>
     </li>
   <% end %>
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Edit account', edit_user_registration_path %>
+      <%= link_to 'Edit account', edit_user_registration_path %>
+    </li>
+    <li>
+      <%= link_to 'My Reports' %>
     </li>
     <% if current_user.has_role? :admin %>
       <li>
-      <%= link_to 'Admin', users_path %>
+
+        <%= link_to 'Admin', users_path %>
       </li>
       <li>
-      <%= link_to 'Technologies', technologies_path %>
+        <%= link_to 'Technologies', technologies_path %>
       </li>
       <li>
-      <%= link_to 'Topics', topics_path %>
+        <%= link_to 'Topics', topics_path %>
       </li>
       <li>
-      <%= link_to 'Questions', questions_path %>
+        <%= link_to 'Questions', questions_path %>
+      </li>
+      <li>
+        <%= link_to 'Reports', reports_path %>
       </li>
     <% end %>
   <% else %>
     <li>
-    <%= link_to 'Sign up', new_user_registration_path %>
+      <%= link_to 'Sign up', new_user_registration_path %>
     </li>
   <% end %>
 </ul>

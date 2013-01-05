@@ -25,4 +25,14 @@ module ApplicationHelper
     return topics
   end
 
+  def exam_topic(topic_id)
+    topic = Topic.find_by_id(topic_id)
+    return topic
+  end
+
+  def exam_technology(technology_id)
+    technology = Technology.find_by_id(technology_id)
+    return technology
+  end
+
 end

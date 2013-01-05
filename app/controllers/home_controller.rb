@@ -1,11 +1,12 @@
 class HomeController < ApplicationController
+  before_filter :authenticate_user!, :except => [:index]
+
   def index
     @technologies = Technology.all
   end
 
 
   def exam
-
     @topic = Topic.find_by_id(params[:id])
     respond_to do |format|
       unless @topic.blank?
@@ -18,6 +19,7 @@ class HomeController < ApplicationController
         format.js { render :js => "window.location.replace('#{root_url}');"  }
       end
     end
+    
   end
 
   def save_exam
@@ -38,17 +40,30 @@ class HomeController < ApplicationController
               @answer.user_id = current_user.id
               @answer.question_type = question.question_type
               @answer_ids = params[:answer]["#{question.id}"].collect{|c| c} unless params[:answer]["#{question.id}"].blank?
-              p @answer_ids
               if question.question_type == "single"
                 @answer.actual_answer_ids = question.options.collect{|c| c.id if c.correct_answer == true}.compact.join(',') unless question.options.blank?
                 @answer.given_answer_ids = @answer_ids.join(',') unless params[:answer]["#{question.id}"].blank?
                 @answer.actual_answers = question.options.collect{|c| c.answer} unless question.options.blank?
-                @answer.given_answers =  params[:answer]["#{question.id}_#{question.topic_id}"] unless params[:answer]["#{question.id}_#{question.topic_id}"].blank?
+                unless @answer_ids.blank?
+                  @answers = []
+                  @answer_ids.each do |answer_id|
+                    @answers << Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).answer
+                  end
+                end
+                @answer.given_answers =  @answers.compact unless @answers.blank?
+
               elsif question.question_type == "multiple"
                 @answer.actual_answer_ids = question.options.collect{|c| c.id if c.correct_answer == true}.compact.join(',') unless question.options.blank?
                 @answer.given_answer_ids = @answer_ids.join(',') unless params[:answer]["#{question.id}"].blank?
                 @answer.actual_answers = question.options.collect{|c| c.answer} unless question.options.blank?
-                @answer.given_answers =  params[:answer]["#{question.id}_#{question.topic_id}"] unless params[:answer]["#{question.id}_#{question.topic_id}"].blank?
+                unless @answer_ids.blank?
+                  @answers = []
+                  @answer_ids.each do |answer_id|
+                    @answers << Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).answer
+                  end
+                end
+                @answer.given_answers =  @answers.compact unless @answers.blank?
+
               elsif question.question_type == "free_text"
                 #@answer.given_answers =  params[:answer]["#{question.id}"] unless params[:answer]["#{question.id}"].blank?
                 @answer.free_text_answer =  params[:answer]["#{question.id}"] unless params[:answer]["#{question.id}"].blank?

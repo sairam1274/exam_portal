@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, :alert => exception.message
   end
 
+  def authenticate_admin_user
+    redirect_to root_path, :alert => "Not authorized to access this page." unless current_user.has_role?("admin")
+  end
+
 end

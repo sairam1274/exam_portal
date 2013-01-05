@@ -10,9 +10,11 @@
     </li>
   <% end %>
 </ul>
+<% unless current_user.blank? %>
 <script type="text/javascript">
   $(document).ready(function() {
     $(".fancybox").fancybox();
   });
 
 </script>
+<% end %>

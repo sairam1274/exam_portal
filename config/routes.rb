@@ -16,6 +16,7 @@ ExamPortal::Application.routes.draw do
         get "list_option_type"
       end
     end
+    resources :reports
   end
 
   authenticated :user do
