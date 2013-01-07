@@ -28,4 +28,7 @@ ExamPortal::Application.routes.draw do
   match '/exam/:id'  => 'home#exam', :as => :exam
   match '/save_exam/:id' => 'home#save_exam', :as => :save_exam
   match '/reports/:id/exam' => 'reports#show', :as => :show_reports
+  match '/check_free_text_answers/:id' => 'home#check_free_text_answers', :as => :free_text_answers
+  match 'my_reports'  => 'reports#my_reports', :as => :my_reports
+ 
 end

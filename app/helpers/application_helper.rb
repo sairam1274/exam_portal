@@ -35,4 +35,9 @@ module ApplicationHelper
     return technology
   end
 
+  def exam_user(user_id)
+    user = User.find_by_id(user_id)
+    return user
+  end
+
 end

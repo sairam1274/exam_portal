@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105105208) do
+ActiveRecord::Schema.define(:version => 20130103125647) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20130105105208) do
     t.text     "actual_answers"
     t.text     "given_answers"
     t.text     "free_text_answer"
-    t.integer  "marks"
     t.integer  "exam_id"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -38,9 +37,9 @@ ActiveRecord::Schema.define(:version => 20130105105208) do
     t.integer  "topic_id"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.boolean  "is_completed",  :default => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "marks"
   end
 
   create_table "options", :force => true do |t|

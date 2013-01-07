@@ -1,14 +1,9 @@
 class ReportsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :authenticate_admin_user, :only => [:index]
-
-  def auth_user
-    redirect_to new_user_registration_path unless user_signed_in?
-  end
-
    
   def index
-    @exams = Kaminari.paginate_array(Exam.order("created_at desc")).page(params[:page]).per(9)
+    @exams = Kaminari.paginate_array(Exam.where(["end_time is NOT NULL"]).order("created_at desc")).page(params[:page]).per(9)
   end
 
 
@@ -20,6 +15,11 @@ class ReportsController < ApplicationController
       flash[:notice] = "We don't have report for this exam right now."
       redirect_to root_url
     end
+  end
+
+  def my_reports
+     @exams = Kaminari.paginate_array(Exam.where(["end_time is NOT NULL and user_id =?",current_user.id]).order("created_at desc")).page(params[:page]).per(9)
+     render :action => "index"
   end
 
 end

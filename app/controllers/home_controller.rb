@@ -89,14 +89,60 @@ class HomeController < ApplicationController
         if (@multiple_choice_questions > 0 and @free_text_questions > 0)
           flash[:notice] = "Thanks.You got #{@correct_multiple_choice_questions} out of #{@multiple_choice_questions} questions right for other #{@free_text_questions} - we shall update you in 2 days and add it to your final score."
         elsif (@multiple_choice_questions == 0 and @free_text_questions > 0)
-          flash[:notice] = "Thanks. For #{@free_text_questions} text question - we shall update you in 2 days and add it to your final score."
+          flash[:notice] = "Thanks. For #{@free_text_questions} text question - we shall update you in 2 days and add it is your final score."
         elsif (@multiple_choice_questions > 0 and @free_text_questions == 0)
-          flash[:notice] = "Thanks.You got #{@correct_multiple_choice_questions} out of #{@multiple_choice_questions} questions right and it is to your final score."
+          @exam.update_attributes(:is_completed=>true)
+          flash[:notice] = "Thanks.You got #{@correct_multiple_choice_questions} out of #{@multiple_choice_questions} questions right and it is your final score."
         end
         format.js { render :js => "window.location.replace('#{show_reports_url(@exam.id)}');" }
       else
         html = render_to_string(:partial => "home/exam_form")
         format.js { render :json => { :html => html } }
+      end
+    end
+  end
+
+
+  def check_free_text_answers
+    @exam = Exam.find_by_id(params[:id])
+    respond_to do |format|
+      if @exam
+        @free_text_answers = @exam.answers.where(['question_type = ?', "free_text"])
+        unless @free_text_answers.blank?
+          @free_text_answers.each do |answer|
+            unless params[:answer]["is_correct_#{answer.id}"].blank?
+              if params[:answer]["is_correct_#{answer.id}"] == "true"
+                answer.update_attributes(:is_correct=>true)
+              else
+                answer.update_attributes(:is_correct=>false)
+              end
+            else
+              answer.update_attributes(:is_correct=>false)
+            end
+          end
+        end
+        unless params[:exam].blank?
+          unless params[:exam][:is_completed].blank?
+            if params[:exam][:is_completed] == "true"
+              @exam.update_attributes(:is_completed=>true)
+            else
+              @exam.update_attributes(:is_completed=>false)
+            end
+          else
+            @exam.update_attributes(:is_completed=>false)
+          end
+        else
+          @exam.update_attributes(:is_completed=>false)
+        end
+        if @exam.is_completed == true
+          @correct_answers = @exam.answers.where(['is_correct = ?', true]).length
+          @exam.update_attributes(:marks=>@correct_answers)
+        end
+        
+        format.js { render :js => "window.location.replace('#{reports_url}');" }
+      else
+        flash[:notice] = "We don't have report for this exam right now."
+        format.js { render :js => "window.location.replace('#{reports_url}');" }
       end
     end
   end

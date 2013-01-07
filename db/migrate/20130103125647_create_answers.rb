@@ -13,7 +13,6 @@ class CreateAnswers < ActiveRecord::Migration
       t.text :actual_answers
       t.text :given_answers
       t.text :free_text_answer
-      t.integer :marks
       t.integer :exam_id
       t.timestamps
     end
