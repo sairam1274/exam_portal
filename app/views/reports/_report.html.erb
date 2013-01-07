@@ -1,10 +1,10 @@
 <div style="margin-left:30px;margin-right: 30px;">
   <% unless @exam.blank? %>
-  
-   <% if current_user.has_role?("admin") %>
+
+    <% if current_user.has_role?("admin") %>
       <% if @exam.is_completed != true %>
         <% if @exam.answers.where(['question_type = ?', "free_text"]).length > 0 %>
-          <form method="post" id="free_text_answer_form" data-remote="true" action="<%= free_text_answers_path(@exam.id) %>" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="4ZVvRqNofpvp7unbcb46keQ2wE/8oWWE7cV2OadyddE=" name="authenticity_token"></div>
+          <form method="post" id="free_text_answer_form" action="<%= free_text_answers_path(@exam.id) %>" accept-charset="UTF-8" ><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="4ZVvRqNofpvp7unbcb46keQ2wE/8oWWE7cV2OadyddE=" name="authenticity_token"></div>
             <div style="float:right">
               <input type="checkbox" value="true" name="exam[is_completed]" id="exam_is_completed_true" />&nbsp; Is completed</div>
           <% end %>
@@ -12,8 +12,6 @@
       <% end %>
 
       <% unless @exam.answers.blank? %>
-
-
         <h1><%= @topic.name.capitalize %></h1>
         <%@exam.answers.each_with_index do |answer,i|%>
           <p id="question_title_field" class="">
@@ -22,7 +20,6 @@
               <% unless answer.actual_answers.blank? %>
                 <% answer.actual_answers.each do |actual_answer| %>
                 <div style="margin-left:60px;">
-
                   <input type="radio" name="actual_answer" <% unless answer.given_answers.blank? %><% if answer.given_answers.include?(actual_answer) %>checked<% end %><% end  %> disabled/>&nbsp;&nbsp;<%= actual_answer %></div>
               <% end %>
             <%end%>
@@ -38,7 +35,11 @@
             <% if @exam.is_completed == true %>
               <%= answer.free_text_answer.gsub("-","").gsub("''","").strip unless answer.free_text_answer.blank?%>
             <% else %>
-              <textarea rows="20" name="answer[<%= answer.id %>]"  cols="40" class="text required questions_title"><%= answer.free_text_answer.gsub("-","").gsub("''","").strip unless answer.free_text_answer.blank?%></textarea>&nbsp;<input type="checkbox" value="true" name="answer[is_correct_<%= answer.id %>]" id="answer_<%= answer.id %>" class="is_correct_option checkbox" <% if answer.is_correct == true %>checked<% end %>/> Is Correct?
+              <% if current_user.has_role?("admin") %>
+                <textarea rows="20" name="answer[<%= answer.id %>]"  cols="40" class="text required questions_title"><%= answer.free_text_answer.gsub("-","").gsub("''","").strip unless answer.free_text_answer.blank?%></textarea>&nbsp;<input type="checkbox" value="true" name="answer[is_correct_<%= answer.id %>]" id="answer_<%= answer.id %>" class="is_correct_option checkbox" <% if answer.is_correct == true %>checked<% end %>/> Is Correct?
+              <% else %>
+                <%= answer.free_text_answer.gsub("-","").gsub("''","").strip unless answer.free_text_answer.blank?%>
+              <% end %>
             <% end %>
           <% end %>
           </p>
@@ -53,7 +54,7 @@
         <% if @exam.is_completed != true %>
           <% if @exam.answers.where(['question_type = ?', "free_text"]).length > 0 %>
             <div class="form-actions">
-              <input type="submit" value="Finish" name="commit" class="btn"/>&nbsp; <%= link_to 'Back', root_path %>
+              <input type="submit" value="Finish" name="commit" class="btn" onclick="return confirm('Are you sure');"/>&nbsp; <%= link_to 'Back', root_path %>
             </div>
           </form>
         <% end %>

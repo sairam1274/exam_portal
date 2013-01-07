@@ -8,7 +8,11 @@ class ReportsController < ApplicationController
 
 
   def show
-    @exam = Exam.first(:conditions => {:id => params[:id], :user_id => current_user.id})
+    if current_user.has_role?("admin")
+      @exam = Exam.first(:conditions => {:id => params[:id]})
+    else
+      @exam = Exam.first(:conditions => {:id => params[:id], :user_id => current_user.id})
+    end
     unless @exam.blank?
       @topic = Topic.find_by_id(@exam.topic_id)
     else

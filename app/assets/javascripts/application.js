@@ -19,6 +19,19 @@
 
 
 function show_topics(technology) {
-    
+
     $(technology).next('ul').slideToggle("slow");
+}
+
+function show_confirm()
+{
+  var r = confirm("Are you sure?");
+  if(r == true)
+  {
+     // do something
+     return true;
+  } else {
+     // do something
+     return false;
+  }
 }
