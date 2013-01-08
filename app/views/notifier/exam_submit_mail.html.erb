@@ -1,1 +1,11 @@
-<%= @exam.id %>
+Hi Admin,
+
+ <%= @user.name %> has given exam on <%=  @topic.name %>.
+
+ <% if @exam.answers.where(['question_type = ?', "free_text"]).length > 0 %>It contains <%=  @exam.answers.where(['question_type = ?', "free_text"]).length %> Free text questions.<% end %>
+
+ Please check and confirm.
+
+
+ Regards,
+ Sparkways Team.

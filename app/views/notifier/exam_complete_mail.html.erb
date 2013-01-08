@@ -1,0 +1,13 @@
+Hi <%= @user.name %>,
+
+ For the exam given on <%=  @topic.name %>, you have scored <%=  @exam.answers.where(['is_correct = ?', true]).length %> out of <%=  @exam.answers.length %>
+
+ Please visit link below to check your report.
+
+<%= link_to("View Report", show_reports_path(:id=>@exam.id), :id=>"exam_#{@exam.id}", :title=>"Click on link to view report of exam given on #{@topic.name}") %>
+
+ Please check and confirm.
+
+
+ Regards,
+ Sparkways Team.

@@ -58,7 +58,7 @@ class HomeController < ApplicationController
               unless @answer_ids.blank?
                 @answers = []
                 @answer_ids.each do |answer_id|
-                  @answers << Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).answer
+                  @answers << Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).answer unless Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).blank?
                 end
               end
               @answer.given_answers =  @answers.compact unless @answers.blank?
@@ -94,6 +94,7 @@ class HomeController < ApplicationController
       elsif (@multiple_choice_questions > 0 and @free_text_questions == 0)
           
         @exam.update_attributes(:is_completed=>true)
+        Notifier.exam_complete_mail(@exam).deliver
         flash[:notice] = "Thanks.You got #{@correct_multiple_choice_questions} out of #{@multiple_choice_questions} questions right and it is your final score."
       end
       Notifier.exam_submit_mail(@exam,current_user).deliver
@@ -140,6 +141,8 @@ class HomeController < ApplicationController
         if @exam.is_completed == true
           @correct_answers = @exam.answers.where(['is_correct = ?', true]).length
           @exam.update_attributes(:marks=>@correct_answers)
+
+          Notifier.exam_complete_mail(@exam).deliver
         end
         flash[:notice] = "Exam updated successfully."
         redirect_to reports_url

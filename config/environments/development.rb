@@ -21,15 +21,30 @@ ExamPortal::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
+#  config.action_mailer.smtp_settings = {
+#    address: "smtp.gmail.com",
+#    port: 587,
+#    domain: "example.com",
+#    authentication: "plain",
+#    enable_starttls_auto: true,
+#    user_name: ENV["GMAIL_USERNAME"],
+#    password: ENV["GMAIL_PASSWORD"]
+#  }
+
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "example.com",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+  :address              => "smtpout.secureserver.net",
+  :port                 => 80,
+  :domain               => 'bb.sparkway.com',
+  :user_name            => 'webwoosmtp@sparkway.com',
+  :password             => 'Webw000',
+  :authentication       => 'plain'
   }
+
+
+
+
+
+
 
 
 
