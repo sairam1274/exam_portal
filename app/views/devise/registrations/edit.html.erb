@@ -7,6 +7,18 @@
   <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
   <%= f.input :password_confirmation, :required => false %>
   <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
+    <div class="control-group integer required"><label for="user_department_id" class="integer required control-label"><abbr title="required">*</abbr>Department</label><div class="controls">
+      <select name="user[department_id]" id="user_department_id" class="numeric integer required">
+        <option value=""></option>
+        <% unless Department.all.blank? %>
+          <% Department.all.each do |department| %>
+            <option value="<%= department.id %>"><%=  department.name  %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </div></div>
+  <%= f.input :employee_id,  :label=>"Employee Id", :required => true %>
+  <%= f.input :designation, :required => true %>
   <%= f.button :submit, 'Update', :class => 'btn-primary' %>
 <% end %>
 <h3>Cancel my account</h3>

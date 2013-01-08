@@ -1,5 +1,8 @@
 ExamPortal::Application.routes.draw do
 
+
+
+
   resources :answers
 
 
@@ -17,6 +20,7 @@ ExamPortal::Application.routes.draw do
       end
     end
     resources :reports
+    resources :departments
   end
 
   authenticated :user do

@@ -8,8 +8,14 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role_ids, :as => :admin
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :department_id, :designation, :employee_id
+
+  validates :name, :department_id,:designation,  :presence => true
+  validates :employee_id, :presence => true, :uniqueness => true
+ 
+
   has_many :exams
+  belongs_to :department
 
   
 end
