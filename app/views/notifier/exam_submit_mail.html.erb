@@ -1,11 +1,11 @@
-Hi Admin,
+Hi Admin, <br/><br/>
 
- <%= @user.name %> has given exam on <%=  @topic.name %>.
+ <%= @user.name %> has given exam on <%=  @topic.name %>. <br/>
 
- <% if @exam.answers.where(['question_type = ?', "free_text"]).length > 0 %>It contains <%=  @exam.answers.where(['question_type = ?', "free_text"]).length %> Free text questions.<% end %>
+ <% if @exam.answers.where(['question_type = ?', "free_text"]).length > 0 %>It contains <%=  @exam.answers.where(['question_type = ?', "free_text"]).length %> Free text questions.<% end %><br/>
 
- Please check and confirm.
+ Please check and confirm. <br/> <br/>
 
 
- Regards,
+ Regards,<br/>
  Sparkways Team.

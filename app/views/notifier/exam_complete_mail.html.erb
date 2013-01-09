@@ -1,12 +1,12 @@
-Hi <%= @user.name %>,
+Hi <%= @user.name %>,<br/><br/>
 
- For the exam given on <%=  @topic.name %>, you have scored <%=  @exam.answers.where(['is_correct = ?', true]).length %> out of <%=  @exam.answers.length %>
+ For the exam given on <%=  @topic.name %>, you have scored <%=  @exam.answers.where(['is_correct = ?', true]).length %> out of <%=  @exam.answers.length %> <br/>
 
- Please visit link below to check your report.
+ Please visit link below to check your report. <br/>
 
-<%= link_to("View Report", show_reports_path(:id=>@exam.id), :id=>"exam_#{@exam.id}", :title=>"Click on link to view report of exam given on #{@topic.name}") %>
+<%= link_to("View Report", show_reports_path(:id=>@exam.id), :id=>"exam_#{@exam.id}", :title=>"Click on link to view report of exam given on #{@topic.name}") %> <br/>
 
- Please check and confirm.
+ Please check and confirm. <br/><br/>
 
 
  Regards,
