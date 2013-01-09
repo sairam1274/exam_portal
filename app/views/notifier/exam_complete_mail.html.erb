@@ -4,10 +4,10 @@ Hi <%= @user.name %>,<br/><br/>
 
  Please visit link below to check your report. <br/>
 
-<%= link_to("View Report", show_reports_path(:id=>@exam.id), :id=>"exam_#{@exam.id}", :title=>"Click on link to view report of exam given on #{@topic.name}") %> <br/>
+<%= link_to("View Report", show_reports_url(:id=>@exam.id), :id=>"exam_#{@exam.id}", :title=>"Click on link to view report of exam given on #{@topic.name}") %> <br/>
 
  Please check and confirm. <br/><br/>
 
 
- Regards,
+ Regards,<br/><br/>
  Sparkways Team.
