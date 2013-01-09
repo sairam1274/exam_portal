@@ -15,8 +15,8 @@
 
 <% @questions.each do |question| %>
   <tr>
-    <td><%= question.technology_id %></td>
-    <td><%= question.topic_id %></td>
+    <td><%= exam_technology(question.technology_id).name unless question.technology_id.blank?%></td>
+    <td><%= exam_topic(question.topic_id).name unless question.topic_id.blank?%></td>
     <td><%= question.title %></td>
     <td><%= question.question_type %></td>
     <td><%= question.note %></td>
