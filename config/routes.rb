@@ -1,17 +1,17 @@
 ExamPortal::Application.routes.draw do
 
-
-
-
   resources :answers
-
-
   resources :exams
-
 
   scope 'admin' do
     resources :technologies do
-      resources :topics
+      resources :topics do
+        resources :questions do
+          collection do
+            get "list_option_type"
+          end
+        end
+      end
     end
     resources :topics
     resources :questions do

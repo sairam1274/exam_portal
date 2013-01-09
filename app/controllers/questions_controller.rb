@@ -27,6 +27,8 @@ class QuestionsController < ApplicationController
   # GET /questions/new.json
   def new
     @question = Question.new
+    @question.technology_id = params[:technology_id] if Technology.exists?(params[:technology_id])
+    @question.topic_id = params[:topic_id] if Topic.exists?(params[:topic_id])
     4.times { @question.options.build }
 
     respond_to do |format|
