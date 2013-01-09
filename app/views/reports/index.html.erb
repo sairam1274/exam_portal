@@ -6,14 +6,15 @@
           <div id="overflow_wrapper">
             <div id="main-content-td" style="padding-top: 0px; width:100%; background:none">
               <div id="main-content" class="">
-                <div class="table_alignment">
-                  <table class="table table-condensed" style="font-size: 12px; overflow:scroll; width: 800px;"  border="0" cellspacing="0">
+                <div class="table_alignment" style="padding-right: 30px; float: left;">
+                  <table class="table table-condensed" style="font-size: 12px; overflow:scroll;"  border="0" cellspacing="0">
+                    <col width="10%"/>
                     <col width="10%"/>
                     <col width="15%"/>
                     <col width="15%"/>
-                    <col width="15%"/>
-                    <col width="25%"/>
                     <col width="20%"/>
+                    <col width="10%"/>
+                    <col width="10%"/>
                     <thead>
                       <tr>
                         <th style="text-align: center">User</th>
@@ -22,6 +23,7 @@
                         <th style="text-align: center">Completed</th>
                         <th style="text-align: center">Score</th>
                         <th style="text-align: center">View Report</th>
+                        <th style="text-align: center">Time Taken</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -36,16 +38,38 @@
                                 <%= exam.answers.where(:is_correct=>true).length %>/<%= exam.answers.length %>
                               <% elsif exam.answers.where(['question_type = ?', "free_text"]).length == 0 %>
                                 <%= (["question_type !=? and is_correct =?", "free_text", true]).length %>/<%= exam.answers.where(["question_type !=?", "free_text"]).length %><% else %><%= exam.answers.where(["question_type !=? and is_correct =?", "free_text", true]).length %>/<%= exam.answers.where(["question_type !=?", "free_text"]).length %> + <%= exam.answers.where(["question_type =?", "free_text"]).length %><span style="color:red"> Free text Answer</span><% end %></td>
-                          <td style="text-align: center;"><% if exam.is_completed == true %><%= link_to("Show",show_reports_path(:id=>exam.id), :id=>"exam_#{exam.id}", :class=>"fancybox") %><% else %><%= link_to("Edit",show_reports_path(:id=>exam.id), :id=>"exam_#{exam.id}", :class=>"fancybox") %><% end %></td>
-                        </tr>
+                            <td style="text-align: center;"><% if exam.is_completed == true %><%= link_to("Show",show_reports_path(:id=>exam.id), :id=>"exam_#{exam.id}", :class=>"fancybox") %><% else %><%= link_to("Edit",show_reports_path(:id=>exam.id), :id=>"exam_#{exam.id}", :class=>"fancybox") %><% end %></td>
+                            <td style="text-align: center;"><%= distance_of_time_in_words((exam.end_time - exam.start_time)) unless exam.end_time.blank?%></td>
+
+                          </tr>
+                        <% end  %>
                       <% end  %>
-                    <% end  %>
                     </tbody>
                   </table>
+
+
+
+
                   <br />
                   <div class="pages" style="margin-left:0px;margin-bottom: 20px;overflow:hidden;float: right"><%= paginate @exams %>
                   </div>
                 </div>
+                <%#*<div style="float: right; width: 330px; margin-left: 25px; margin-top: -10px;">%>
+                  <%#*<div><h3 style="font-size: 1.5em;line-height: 1.25;">Search</h3></div>%>
+
+                  <%#*<div data-hook="admin_products_index_search">%>
+                    <%#*<p>%>
+                      <%#*<strong style=" font-size: 14px; line-height: 20px; margin-right: 10px;">Name</strong>&nbsp;<input type="text" id="q_name_cont" name="q[name_cont]" size="15">%>
+                    <%#*</p>%>
+                     <%#*<p>%>
+                      <%#*<input type="hidden" name="q[deleted_at_null]" value="1"><input type="checkbox" id="q_deleted_at_null" name="q[deleted_at_null]" value="" style="margin-right: 10px; margin-left: 50px;padding-top:10px"/> <strong style="font-size: 14px; line-height: 20px;">Free Text Questions</strong>%>
+                    <%#*</p>%>
+                  <%#*</div>%>
+
+
+
+                <%#*</div>%>
+                <div style="clear:both;"></div>
               </div>
               <br />
             </div>
