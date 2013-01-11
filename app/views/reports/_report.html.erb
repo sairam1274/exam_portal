@@ -4,10 +4,13 @@
     <% if current_user.has_role?("admin") %>
       <% if @exam.is_completed != true %>
         <% if @exam.answers.where(['question_type = ?', "free_text"]).length > 0 %>
-          <form method="post" id="free_text_answer_form" action="<%= free_text_answers_path(@exam.id) %>" accept-charset="UTF-8" ><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="4ZVvRqNofpvp7unbcb46keQ2wE/8oWWE7cV2OadyddE=" name="authenticity_token"></div>
+          <form method="post" id="free_text_answer_form" action="<%= free_text_answers_path(@exam.id) %>" accept-charset="UTF-8" ><div style="margin:0;padding:0;display:inline">
+              <input type="hidden" value="✓" name="utf8" /><input type="hidden" value="4ZVvRqNofpvp7unbcb46keQ2wE/8oWWE7cV2OadyddE=" name="authenticity_token"></div>
             <div style="float:right">
               <input type="checkbox" value="true" name="exam[is_completed]" id="exam_is_completed_true" />&nbsp; Is completed</div>
-          <% end %>
+            <input type="hidden" value="<%= exam_topic(@exam.topic_id).name unless @exam.topic_id.blank?%>" name="exam[topic]" id="exam_topic" />
+              <input type="hidden" value="<%= exam_technology(@exam.technology_id).name unless @exam.technology_id.blank?%>" name="exam[technology]" id="exam_technology" />
+        <% end %>
         <% end %>
       <% end %>
 

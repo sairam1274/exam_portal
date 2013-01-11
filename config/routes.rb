@@ -34,5 +34,5 @@ ExamPortal::Application.routes.draw do
   match '/reports/:id/exam' => 'reports#show', :as => :show_reports
   match '/check_free_text_answers/:id' => 'home#check_free_text_answers', :as => :free_text_answers
   match 'my_reports'  => 'reports#my_reports', :as => :my_reports
- 
+  match 'search'  => 'reports#search', :as => :search
 end

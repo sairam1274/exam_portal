@@ -26,4 +26,29 @@ class ReportsController < ApplicationController
      render :action => "index"
   end
 
+   def search
+    if params[:title].blank? && params[:is_completed].blank? && params[:free_text_answer].blank?
+       @exams = Kaminari.paginate_array(Exam.where(["end_time is NOT NULL"]).order("created_at desc")).page(params[:page]).per(9)
+    elsif params[:title].blank? && params[:is_completed].present? && params[:free_text_answer].present?
+       @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_type` =? and exams.is_completed =?", "free_text", true).where(["exams.end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+    elsif params[:title].present? && params[:is_completed].present? && params[:free_text_answer].blank?
+       title = "%"+params[:title]+"%"
+       @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_title` like ? or `exams`.`topic` like? or `exams`.`technology` like? or `users`.`name` like ?", title,title,title, title).where(["end_time is NOT NULL"]).where("exams.is_completed =?", true).where(["end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+    elsif params[:title].present? && params[:is_completed].blank? && params[:free_text_answer].present?
+       title = "%"+params[:title]+"%"
+       @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_title` like ? or `exams`.`topic` like? or `exams`.`technology` like? or `users`.`name` like ?", title,title,title, title).where("`answers`.`question_type`  =?","free_text").where(["end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+   elsif params[:title].blank? && params[:is_completed].blank? && params[:free_text_answer].present?
+       @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_type` =?", "free_text").where(["end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+    elsif params[:title].present? && params[:is_completed].blank? && params[:free_text_answer].blank?
+        title = "%"+params[:title]+"%"
+       @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_title` like ? or `exams`.`topic` like? or `exams`.`technology` like? or `users`.`name` like ?", title,title,title, title).where(["end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+    elsif params[:title].present? && params[:is_completed].blank? && params[:free_text_answer].present?
+      @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_type`  =?","free_text").where(["end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+    else
+      title = "%"+params[:title]+"%"
+      @exams = Kaminari.paginate_array(Exam.includes(:user,:answers).where("`answers`.`question_title` like ? or `exams`.`topic` like? or `exams`.`technology` like? or `users`.`name` like ?", title,title,title, title).where(["end_time is NOT NULL"]).uniq).page(params[:page]).per(9)
+    end
+    render :action => "index"
+  end
+
 end

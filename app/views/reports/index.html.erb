@@ -6,7 +6,7 @@
           <div id="overflow_wrapper">
             <div id="main-content-td" style="padding-top: 0px; width:100%; background:none">
               <div id="main-content" class="">
-                <div class="table_alignment" style="padding-right: 30px; float: left;">
+                <div class="table_alignment" style="padding-right: 30px; border-right: 1px solid #000000;float: left;width: 700px;">
                   <table class="table table-condensed" style="font-size: 12px; overflow:scroll;"  border="0" cellspacing="0">
                     <col width="10%"/>
                     <col width="10%"/>
@@ -43,7 +43,12 @@
 
                           </tr>
                         <% end  %>
-                      <% end  %>
+                      <% else %>
+                      <div class="alert alert-success">
+                        <a data-dismiss="alert" class="close">×</a>
+                        <div id="flash_notice"> No data found.</div>
+                      </div>
+                    <% end  %>
                     </tbody>
                   </table>
 
@@ -54,21 +59,30 @@
                   <div class="pages" style="margin-left:0px;margin-bottom: 20px;overflow:hidden;float: right"><%= paginate @exams %>
                   </div>
                 </div>
-                <%#*<div style="float: right; width: 330px; margin-left: 25px; margin-top: -10px;">%>
-                  <%#*<div><h3 style="font-size: 1.5em;line-height: 1.25;">Search</h3></div>%>
 
-                  <%#*<div data-hook="admin_products_index_search">%>
-                    <%#*<p>%>
-                      <%#*<strong style=" font-size: 14px; line-height: 20px; margin-right: 10px;">Name</strong>&nbsp;<input type="text" id="q_name_cont" name="q[name_cont]" size="15">%>
-                    <%#*</p>%>
-                     <%#*<p>%>
-                      <%#*<input type="hidden" name="q[deleted_at_null]" value="1"><input type="checkbox" id="q_deleted_at_null" name="q[deleted_at_null]" value="" style="margin-right: 10px; margin-left: 50px;padding-top:10px"/> <strong style="font-size: 14px; line-height: 20px;">Free Text Questions</strong>%>
-                    <%#*</p>%>
-                  <%#*</div>%>
+                <div style="float: right; width: 330px; margin-left: 25px; margin-top: -10px;">
+                  <div><h3 style="font-size: 1.5em;line-height: 1.25;">Search</h3></div>
+                  <%= form_tag(search_path) do %>
+                    <div data-hook="admin_products_index_search">
+                      <p>
+                        <strong style=" font-size: 14px; line-height: 20px; margin-right: 10px;">Name</strong>&nbsp;<input type="text" id="title" name="title" size="15" <% if params[:title].present? %>value="<%= params[:title] %>"<% end %> />
+                      </p>
+                      <p>
+                        <input type="checkbox" value="true" name="free_text_answer" id="free_text_answer" style="margin-right: 10px; margin-left: 50px;padding-top:10px" <% if params[:free_text_answer].present?  %>checked<% end  %>/><strong style="font-size: 14px; line-height: 20px;">Free Text Questions</strong>
+                      </p>
+
+                      <p>
+                        <input type="checkbox" value="true" name="is_completed" id="is_completed" style="margin-right: 10px; margin-left: 50px;padding-top:10px"  <% if params[:is_completed].present? %>checked<% end  %>/> <strong style="font-size: 14px; line-height: 20px;">Is Completed</strong>
+                      </p>
+                      <p style="padding-top:20px;margin-left:50px;">
+                        <input type="submit" value="Search" name="commit" class="btn btn-primary" />
+                      </p>
+                    </div>
+                  <% end  %>
 
 
+                </div>
 
-                <%#*</div>%>
                 <div style="clear:both;"></div>
               </div>
               <br />
