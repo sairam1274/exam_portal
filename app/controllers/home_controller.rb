@@ -46,7 +46,7 @@ class HomeController < ApplicationController
               unless @answer_ids.blank?
                 @answers = []
                 @answer_ids.each do |answer_id|
-                  @answers << Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).answer
+                  @answers << Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).answer unless Option.first(:conditions => {:id =>answer_id.to_i, :question_id => question.id}).blank?
                 end
               end
               @answer.given_answers =  @answers.compact unless @answers.blank?
