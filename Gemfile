@@ -34,3 +34,4 @@ gem 'fancybox-rails'
 gem "nested_form"
 gem "rb-readline", "~> 0.4.2"
 gem "kaminari"
+gem "devise_ldap_authenticatable"
